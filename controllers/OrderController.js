@@ -1,5 +1,5 @@
 //Importo modelo de datos
-const db= require("../models");
+const db = require("../models");
 const orders = db.order;
 const Op = db.Sequelize.Op; //Importo todas las ORM de sequelize
 
@@ -8,16 +8,16 @@ const OrderController = {}; //Creamos el objeto controller
 //CRUD de fuciones end-point
 
 //GET todas las ordenes de la base de datos
-OrderController.getAll = (req,res) =>{
+OrderController.getAll = (req, res) => {
 
     orders.findAll()
-    .then(data => {
-        res.send(data);
-    })
+        .then(data => {
+            res.send(data);
+        })
         .catch(err => {
             res.status(500).send({
-            message:
-                err.message || "Ha ocurrido un error al buscar todos los pedidos"
+                message:
+                    err.message || "Ha ocurrido un error al buscar todos los pedidos"
             });
         });
 };
@@ -28,18 +28,50 @@ OrderController.getById = (req, res) => {
     const id = req.params.id;
 
     orders.findByPk(id)
-    .then(data =>{
-        if(data){
-            res.send(data);
-        } else{
-            res.status(404).send({
-                message: `No se puede encontrar order por id=${id}.`
+        .then(data => {
+            if (data) {
+                res.send(data);
+            } else {
+                res.status(404).send({
+                    message: `No se puede encontrar order por id=${id}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error al obtener orders con id=" + id
             });
-        }
+        });
+};
+//--------------------------------------------------------------
+//CRUD para crear una nueva order en data base.
+OrderController.create = (req, res) => {
+
+    if (!res.body.id) {
+        res.status(400).send({
+            message: "El contenido no puede estar vacio"
+        });
+        return;
+    }
+
+    //Crear un Order
+    const newOrder = {
+        country: req.body.country,
+        date: req.body.date,
+        company: req.body.company,
+        status: req.body.status,
+        type: req.body.type
+    };
+
+    //Guarda la orden en la base de datos
+    orders.create(newOrder)
+    .the(data =>{
+        res.send(data);
     })
     .catch(err =>{
         res.status(500).send({
-            message: "Error al obtener orders con id=" + id
+            message:
+            err.message || "Ha ocurrido un error al crear un Order"
         });
     });
-};
+}
