@@ -74,4 +74,32 @@ OrderController.create = (req, res) => {
             err.message || "Ha ocurrido un error al crear un Order"
         });
     });
-}
+
+};
+
+//------------------------------------------------------------------
+// Funcion para realizar cambios en el Order.
+OrderController.update = (req, res) => {
+
+    const id = req.params.id;
+
+    orders.update(req.body,{
+        where : {id: id}
+    })
+        .then(num =>{
+            if(num == 1){
+                res.sed({
+                    message: "Se ha creado la orden correctamente."
+                });
+            } else{
+                res.sed({
+                   message: `No se puede editar el Order con id=${id} .Revisa el body.`
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).sed({
+                message: "Error editando el Order con id=" + id
+            });
+        });
+};
