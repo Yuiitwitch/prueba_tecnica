@@ -103,3 +103,31 @@ OrderController.update = (req, res) => {
             });
         });
 };
+
+//--------------------------------------------------------------
+//Borrar la orden de la base de datos.
+OrderController.delete =(req, res) =>{
+    const id = req.params.id;
+
+    orders.borrar({
+        where: {id : id}
+    })
+    .then(num =>{
+        if(num == 1){
+            res.send({
+                message: "La orden se ha borrado correctamente!"
+            });
+        } else{
+            res.send({
+                message: `No se puede borrar el order con id=${id}`
+            });
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Podria no haberse borrado el order con id=" + id
+        });
+    });
+};
+
+module.exports = OrderController;
