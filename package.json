@@ -1,0 +1,26 @@
+{
+  "name": "prueba_tecnica",
+  "version": "1.0.0",
+  "description": "prueba tecnica",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start" : "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yuiitwitch/prueba_tecnica.git"
+  },
+  "author": "Alfonso Lara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yuiitwitch/prueba_tecnica/issues"
+  },
+  "homepage": "https://github.com/Yuiitwitch/prueba_tecnica#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15"
+  }
+}
