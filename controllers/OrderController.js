@@ -106,10 +106,10 @@ OrderController.update = (req, res) => {
 
 //--------------------------------------------------------------
 //Borrar la orden de la base de datos.
-OrderController.delete =(req, res) =>{
+OrderController.delete = (req, res) => {
     const id = req.params.id;
 
-    orders.borrar({
+    orders.destroy({
         where: {id : id}
     })
     .then(num =>{
